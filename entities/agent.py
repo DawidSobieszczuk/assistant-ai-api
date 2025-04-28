@@ -9,7 +9,21 @@ from google.genai import types
 class Agent(Entity) :
     def __init__(self, entity_id:int, database:Database) -> None:
         super().__init__(entity_id, database)
-        result = self.database.query("SELECT * FROM agents WHERE entity_id = %s", self.entity_id)
+        result = self.database.query("""
+            SELECT 
+                agents.agent_id, 
+                agents.agent_name, 
+                agents.agent_description, 
+                agents.agent_instruction,
+                agents.llm_api_key_id,
+                agents.llm_model,
+                agents.llm_temperature,
+                api_keys.api_key as llm_api_key
+            FROM 
+                agents 
+                LEFT JOIN api_keys ON agents.llm_api_key_id = api_keys.api_key_id
+            WHERE entity_id = %s""", 
+            self.entity_id)
 
         self.agent_id:int = result[0]["agent_id"]
         self.agent_name = result[0]["agent_name"]

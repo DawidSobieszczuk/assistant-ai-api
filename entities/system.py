@@ -34,7 +34,7 @@ class System(Entity):
             },
             "source": self.entiry_id,
             "destination": message["source_id"],
-            "timestamp": datetime.timestamp()
+            "timestamp": datetime.datetime.timestamp(datetime.datetime.now())
         }
     
     def get_data_from_external_api(self, message:json) -> json:
@@ -48,5 +48,5 @@ class System(Entity):
             "data": response.json(),
             "source": self.entiry_id,
             "destination": message["source_id"],
-            "timestamp": datetime.timestamp()
+            "timestamp": datetime.datetime.timestamp(datetime.datetime.now())
         }

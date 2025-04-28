@@ -12,12 +12,12 @@ class WebSearchAgent(Agent):
     def __init__(self, database:Database):
         super().__init__(Config.entity_agent_basic_info, database)
 
-        self.chat = self.client.chat(
+        self.chat = self.client.chats.create(
             model=self.llm_model,
-            config=types.ChatConfig(
+            config=types.GenerateContentConfig(
                 temperature=self.llm_temperature,
                 system_instruction=self.agent_instruction.format(
-                    
+
                 )
             )
         )
