@@ -4,6 +4,7 @@ Mój osobisty prywatny assysten AI
 ## TODO
 [ ] Dodać uniwersalny tekst/setup dla każdego agenta i assystenta ze strukturą wiadomości itp.
 [ ] Dodać sprawdzanie czy json jest odpoweiedni i posiada wszystkie potrzebne dane, ewentualnie urzyć try - co bedzie chyba najlepszym rozwiązaniem
+[ ] i tak samo jak wyrzej dla danych z bazy danych
 
 ## JSON
 To jest wiadomości
