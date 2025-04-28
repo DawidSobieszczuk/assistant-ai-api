@@ -1,0 +1,15 @@
+mysql:
+  host: localhost
+  port: 3306
+  user: user
+  password: pass
+  database: db
+
+entities:
+  app_id: 4
+  system_id: 5
+  agents:
+    basic_info_id: 6
+
+weather_api_key_id: 2
+langsearch_api_key_id: 5
