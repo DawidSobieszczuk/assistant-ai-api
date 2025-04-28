@@ -12,9 +12,9 @@ class Agent(Entity) :
         result = self.database.query("SELECT * FROM agents WHERE entity_id = %s", self.entity_id)
 
         self.agent_id:int = result[0]["agent_id"]
-        self.agent_name = result[0]["name"]
-        self.agent_description = result[0]["description"]
-        self.agent_instruction = result[0]["instruction"]
+        self.agent_name = result[0]["agent_name"]
+        self.agent_description = result[0]["agent_description"]
+        self.agent_instruction = result[0]["agent_instruction"]
         self.llm_api_key = result[0]["llm_api_key"]
         self.llm_model = result[0]["llm_model"]
         self.llm_temperature = result[0]["llm_temperature"]
