@@ -1,7 +1,5 @@
-from config import Config
+from app import App
 
-class App():
-    def __init__(self):
-        Config.load_from_file("config.yaml")
-
-App()
+if __name__ ==  "__main__":
+    app = App()
+    #TODO: [20.04.2025] Dodaj metode do obsługi api

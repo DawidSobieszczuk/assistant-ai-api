@@ -21,14 +21,14 @@ class Assistant(Entity):
                 assistents
                 LEFT JOIN api_keys ON assistents.llm_api_key_id = api_keys.api_key_id
             WHERE entity_id = %s""", 
-            self.entity_id)
-
-        self.assistent_id:int = result[0]["assistents_id"]
-        self.assistent_name = result[0]["assistents_name"]
-        self.assistent_instruction:str = result[0]["assistents_instruction"]
-        self.llm_api_key = result[0]["llm_api_key"]
-        self.llm_model = result[0]["llm_model"]
-        self.llm_temperature = result[0]["llm_temperature"]
+            self.entity_id)[0]
+            
+        self.assistent_id:int = result["assistents_id"]
+        self.assistent_name = result["assistents_name"]
+        self.assistent_instruction:str = result["assistents_instruction"]
+        self.llm_api_key = result["llm_api_key"]
+        self.llm_model = result["llm_model"]
+        self.llm_temperature = result["llm_temperature"]
         
         self.client = genai.Client(
             api_key=self.llm_api_key

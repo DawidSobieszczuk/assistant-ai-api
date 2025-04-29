@@ -8,7 +8,7 @@ from google import genai
 class Agent(Entity) :
     def __init__(self, entity_id:int, database:Database) -> None:
         super().__init__(entity_id, database)
-        result = self.database.query("""
+        results = self.database.query("""
             SELECT 
                 agents.agent_id, 
                 agents.agent_name, 
@@ -23,14 +23,20 @@ class Agent(Entity) :
                 LEFT JOIN api_keys ON agents.llm_api_key_id = api_keys.api_key_id
             WHERE entity_id = %s""", 
             self.entity_id)
+        
+        if len(results) == 0:
+            raise Exception(f"Agent with entity_id {entity_id} not found")
+            # Pomyśl o tym, ale wydaje mi sie, że powinno wywalać bład a nie go obsługować
+        
+        result = results[0]
 
-        self.agent_id:int = result[0]["agent_id"]
-        self.agent_name = result[0]["agent_name"]
-        self.agent_description = result[0]["agent_description"]
-        self.agent_instruction = result[0]["agent_instruction"]
-        self.llm_api_key = result[0]["llm_api_key"]
-        self.llm_model = result[0]["llm_model"]
-        self.llm_temperature = result[0]["llm_temperature"]
+        self.agent_id:int = result["agent_id"]
+        self.agent_name = result["agent_name"]
+        self.agent_description = result["agent_description"]
+        self.agent_instruction = result["agent_instruction"]
+        self.llm_api_key = result["llm_api_key"]
+        self.llm_model = result["llm_model"]
+        self.llm_temperature = result["llm_temperature"]
         
         self.client = genai.Client(
             api_key=self.llm_api_key
