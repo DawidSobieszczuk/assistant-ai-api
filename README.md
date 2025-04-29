@@ -55,7 +55,7 @@ To jest błąd
 ```
 
 ## TODO
-[ ] [28.04.2025] Dodać uniwersalny tekst/setup dla każdego agenta i assystenta ze strukturą wiadomości itp.
-[ ] [28.04.2025] Dodać sprawdzanie czy json jest odpoweiedni i posiada wszystkie potrzebne dane, ewentualnie urzyć try - co bedzie chyba najlepszym rozwiązaniem
-[ ] [28.04.2025] I tak samo jak wyrzej dla danych z bazy danych
-[ ] [29.04.2025] Logowanie błedów do pliku
+[ ] (28.04.2025) Dodać uniwersalny tekst/setup dla każdego agenta i assystenta ze strukturą wiadomości itp.
+[ ] (28.04.2025) Dodać sprawdzanie czy json jest odpoweiedni i posiada wszystkie potrzebne dane, ewentualnie urzyć try - co bedzie chyba najlepszym rozwiązaniem
+[ ] (28.04.2025) I tak samo jak wyrzej dla danych z bazy danych
+[ ] (29.04.2025) Logowanie błedów do pliku
