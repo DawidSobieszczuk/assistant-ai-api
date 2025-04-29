@@ -1,17 +1,22 @@
 import datetime
 
 from config import Config
+from helper import Helper
+from database import Database
 from entitiesContext import EntitiesContext
 
 from entities.user import User
+from entities.assistants.talos import TalosAssistant
 
 class App():
     def __init__(self):
         Config.load_from_file("config.yaml")
+        self.database = Database(Config.mysql_host, Config.mysql_port, Config.mysql_database, Config.mysql_user, Config.mysql_password)
 
-        #TODO: [20.04.2025] Wyciagnij tworzenie obiektu database tutaj i dodaj jakko parametr do obiektów ponirzej
-        self.entities_context = EntitiesContext()
-        self.user = User(2, self.entities_context.database)
+        self.user = User(2, self.database) #TODO: [29.04.2025] Dodaj logike wyboru użytkownika teraz jestem wpisany na sztywno !ta 2 ma zniknać!
+        
+        self.entities_context = EntitiesContext(self.database)
+        self.entities_context.add_entity(TalosAssistant(self.database, self.user.entity_id))
 
     def run_loop(self):
         while True:
@@ -20,11 +25,15 @@ class App():
                 break
 
             message = {
-                "source_id": Config.entity_app,
-                "destination_id": Config.entity_system,
-                "message": message,
-                "timestamp": datetime.datetime.now()
+                "success": True,
+                "source_id": self.user.entity_id,
+                "destination_id": self.user.assistant_entity_id,
+                "message": [message],
+                "timestamp": Helper.get_timestamp()
             }
 
             response = self.entities_context.send_message(message)
-            print(response['message'])
+            if response["success"]:
+                print("\n".join(response["message"]))
+            else:
+                print(response)

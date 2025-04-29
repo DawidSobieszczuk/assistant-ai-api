@@ -1,4 +1,4 @@
-import json, traceback, datetime
+import json, traceback, datetime, time
 
 from database import Database
 from entity import Entity
@@ -8,35 +8,22 @@ from google.genai import errors
 
 from helper import Helper
 
-class Agent(Entity) :
+class Assistant(Entity):
     def __init__(self, entity_id:int, database:Database) -> None:
         super().__init__(entity_id, database)
-        results = self.database.query("""
+        result = self.database.query("""
             SELECT 
-                agents.agent_id, 
-                agents.agent_name, 
-                agents.agent_description, 
-                agents.agent_instruction,
-                agents.llm_api_key_id,
-                agents.llm_model,
-                agents.llm_temperature,
+                assistants.*,
                 api_keys.api_key as llm_api_key
             FROM 
-                agents 
-                LEFT JOIN api_keys ON agents.llm_api_key_id = api_keys.api_key_id
-            WHERE entity_id = %s""", 
-            self.entity_id)
-        
-        if len(results) == 0:
-            raise Exception(f"Agent with entity_id {entity_id} not found")
-            # Pomyśl o tym, ale wydaje mi sie, że powinno wywalać bład a nie go obsługować
-        
-        result = results[0]
-
-        self.agent_id:int = result["agent_id"]
-        self.agent_name = result["agent_name"]
-        self.agent_description = result["agent_description"]
-        self.agent_instruction = result["agent_instruction"]
+                assistants
+                LEFT JOIN api_keys ON assistants.llm_api_key_id = api_keys.api_key_id
+            WHERE assistants.entity_id = %s""", 
+            self.entity_id)[0]
+            
+        self.assistent_id:int = result["assistant_id"]
+        self.assistent_name = result["assistant_name"]
+        self.assistent_instruction:str = result["assistant_instruction"]
         self.llm_api_key = result["llm_api_key"]
         self.llm_model = result["llm_model"]
         self.llm_temperature = result["llm_temperature"]
@@ -57,11 +44,11 @@ class Agent(Entity) :
                 "timestamp": Helper.get_timestamp()
             }
 
-        self.chat.send_message(message)
+        string_message = json.dumps(message)
         try:
-            response = self.chat.get_response()
+            response = self.chat.send_message(string_message)
             try:
-                return json.load(response.text[7:-4], strict=False)
+                return json.loads(response.text[7:-4], strict=False)
             except:
                 return {
                     "success": False,
@@ -70,17 +57,16 @@ class Agent(Entity) :
                         "raw_response": response.text,
                         "error_msg": traceback.format_exc()
                     },                    
-                    "source": self.entiry_id,
-                    "destination": message["source_id"],
+                    "source_id": self.entity_id,
+                    "destination_id": message["source_id"],
                     "timestamp": Helper.get_timestamp()
                 }
         except errors.APIError as e:
             if(e.code == 503):
-                print ("Service Unavailable. Try again... after 3 seconds") # TODO [29.04.2025] Log do pliku
+                print ("Service Unavailable. Try again... after 3 seconds") # TODO [29.04.2025] Log do pliku jedno i drugie. i jescze przeniesienie tego czasu w sleep to configa
                 time.sleep(3)
                 return self.send_message(message)
             elif(e.code == 429):
                 print ("Rate limit exceeded. Try again... after 3 seconds")
                 time.sleep(3)
                 return self.send_message(message)
-

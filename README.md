@@ -58,4 +58,5 @@ To jest błąd
 - [ ] (28.04.2025) Dodać uniwersalny tekst/setup dla każdego agenta i assystenta ze strukturą wiadomości itp.
 - [ ] (28.04.2025) Dodać sprawdzanie czy json jest odpoweiedni i posiada wszystkie potrzebne dane, ewentualnie urzyć try - co bedzie chyba najlepszym rozwiązaniem
 - [ ] (28.04.2025) I tak samo jak wyrzej dla danych z bazy danych
-- [ ] (29.04.2025) Logowanie błedów do pliku
+- [ ] (29.04.2025) Obsługa błedów i logowanie błedów do pliku, myśle zrobić to w classie app, a wcześniej wyrzucać błedy typu brak takie id w bazie danych
+- [ ] (29.04.2025) Dokumentacja do bazy danych, zastanawiam się nad formą i odrazu można by ją przekazać assystentowi od bazy danych
