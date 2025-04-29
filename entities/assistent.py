@@ -5,29 +5,27 @@ from entity import Entity
 
 from google import genai
 
-class Agent(Entity) :
+class Assistant(Entity):
     def __init__(self, entity_id:int, database:Database) -> None:
         super().__init__(entity_id, database)
         result = self.database.query("""
             SELECT 
-                agents.agent_id, 
-                agents.agent_name, 
-                agents.agent_description, 
-                agents.agent_instruction,
-                agents.llm_api_key_id,
-                agents.llm_model,
-                agents.llm_temperature,
+                assistents.agent_id, 
+                assistents.agent_name, 
+                agents.agent_description,
+                assistents.llm_api_key_id,
+                assistents.llm_model,
+                assistents.llm_temperature,
                 api_keys.api_key as llm_api_key
             FROM 
-                agents 
-                LEFT JOIN api_keys ON agents.llm_api_key_id = api_keys.api_key_id
+                assistents
+                LEFT JOIN api_keys ON assistents.llm_api_key_id = api_keys.api_key_id
             WHERE entity_id = %s""", 
             self.entity_id)
 
-        self.agent_id:int = result[0]["agent_id"]
-        self.agent_name = result[0]["agent_name"]
-        self.agent_description = result[0]["agent_description"]
-        self.agent_instruction = result[0]["agent_instruction"]
+        self.assistent_id:int = result[0]["assistents_id"]
+        self.assistent_name = result[0]["assistents_name"]
+        self.assistent_instruction:str = result[0]["assistents_instruction"]
         self.llm_api_key = result[0]["llm_api_key"]
         self.llm_model = result[0]["llm_model"]
         self.llm_temperature = result[0]["llm_temperature"]
@@ -45,7 +43,7 @@ class Agent(Entity) :
                 "error": "Chat session not initialized",
                 "source": self.entity_id,
                 "destination": message["source_id"],
-                "timestamp": datetime.timestamp()
+                "timestamp": datetime.datetime.now()
             }
 
         self.chat.send_message(message)
@@ -62,6 +60,5 @@ class Agent(Entity) :
                 },                    
                 "source": self.entiry_id,
                 "destination": message["source_id"],
-                "timestamp": datetime.timestamp()
+                "timestamp": datetime.datetime.now()
             }
-

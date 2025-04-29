@@ -13,7 +13,8 @@ To jest wiadomości
     "succes": true,
     "message": ["Wiadomość", "Nastepny wiesz"],
     "source_id": 1,
-    "destination_id": 2
+    "destination_id": 2,
+    "timestamp": "28.04.2025 18:36"
 }
 ```
 
@@ -27,7 +28,8 @@ To wiadomość do system/app
         ...
     },
     "source_id": 1,
-    "destination_id": 2
+    "destination_id": 2,
+    "timestamp": "28.04.2025 18:36"
 }
 ```
 
@@ -38,7 +40,8 @@ To jest wiadomośc od systemu:
     "message": ["Wszystkie inforamacje w polu 'data'"],
     "data": ...,
     "source_id": 1,
-    "destination_id": 2
+    "destination_id": 2,
+    "timestamp": "28.04.2025 18:36"
 }
 ```
 
@@ -51,6 +54,7 @@ To jest błąd
         ...
     },
     "source_id": 1,
-    "destination_id": 2
+    "destination_id": 2,
+    "timestamp": "28.04.2025 18:36"
 }
 ```

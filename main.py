@@ -19,7 +19,7 @@ class App():
                 "source_id": Config.entity_app,
                 "destination_id": Config.entity_system,
                 "message": message,
-                "timestamp": datetime.datetime.timestamp(datetime.datetime.now())
+                "timestamp": datetime.datetime.now()
             }
 
             response = self.entities_context.send_message(message)
