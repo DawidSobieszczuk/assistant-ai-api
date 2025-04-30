@@ -1,4 +1,4 @@
-import datetime
+import json
 
 from config import Config
 from helper import Helper
@@ -17,23 +17,3 @@ class App():
         
         self.entities_context = EntitiesContext(self.database)
         self.entities_context.add_entity(TalosAssistant(self.database, self.user.entity_id))
-
-    def run_loop(self):
-        while True:
-            message = input("> ")
-            if message.lower() == "exit":
-                break
-
-            message = {
-                "success": True,
-                "source_id": self.user.entity_id,
-                "destination_id": self.user.assistant_entity_id,
-                "message": [message],
-                "timestamp": Helper.get_timestamp()
-            }
-
-            response = self.entities_context.send_message(message)
-            if response["success"]:
-                print("\n".join(response["message"]))
-            else:
-                print(response)

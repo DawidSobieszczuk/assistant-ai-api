@@ -63,10 +63,18 @@ class Assistant(Entity):
                 }
         except errors.APIError as e:
             if(e.code == 503):
-                print ("Service Unavailable. Try again... after 3 seconds") # TODO [29.04.2025] Log do pliku jedno i drugie. i jescze przeniesienie tego czasu w sleep to configa
-                time.sleep(3)
-                return self.send_message(message)
+                return {
+                    "success": False,
+                    "error": "Service Unavailable",                  
+                    "source_id": self.entity_id,
+                    "destination_id": message["source_id"],
+                    "timestamp": Helper.get_timestamp()
+                }
             elif(e.code == 429):
-                print ("Rate limit exceeded. Try again... after 3 seconds")
-                time.sleep(3)
-                return self.send_message(message)
+                return {
+                    "success": False,
+                    "error": "Rate Limit Exceeded",                  
+                    "source_id": self.entity_id,
+                    "destination_id": message["source_id"],
+                    "timestamp": Helper.get_timestamp()
+                }
