@@ -1,11 +1,11 @@
-# Talos
-Mój osobisty prywatny assysten AI
+# Assistant AI | API
+Mój osobisty prywatny assysten AI | API
 
 ## JSON
 To jest wiadomości
 ```json
 {
-    "succes": true,
+    "success": true,
     "message": ["Wiadomość", "Nastepny wiesz"],
     "source_id": 1,
     "destination_id": 2,
@@ -16,7 +16,7 @@ To jest wiadomości
 To wiadomość do system/app
 ```json
 {
-    "succes": true,
+    "success": true,
     "message": ["coś tam"],
     "action_type": "nazwa akcji",
     "action_details": {
@@ -31,7 +31,7 @@ To wiadomość do system/app
 To jest wiadomośc od systemu:
 ```json
 {
-    "succes": true,
+    "success": true,
     "message": ["Wszystkie inforamacje w polu 'data'"],
     "data": ...,
     "source_id": 1,
@@ -43,7 +43,7 @@ To jest wiadomośc od systemu:
 To jest błąd
 ```json
 {
-    "succes": false,
+    "success": false,
     "error_message": "Oj nie. Coś poszło nie tak :(",
     "error_details": {
         ...
